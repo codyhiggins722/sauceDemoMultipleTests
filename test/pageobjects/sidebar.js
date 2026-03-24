@@ -1,0 +1,23 @@
+import { $ } from 'wdio/globals'
+import Site from '../pageobjects/site.main'
+//hamburger menu items
+class HamburgerMenu extends Site{
+//-------selectors-----------
+    get hamburgerBtn(){
+            return $('.bm-burger-button')
+        }
+    get allItems(){
+        return $('#inventory_sidebar_link')
+    }
+    get about(){
+        return $('#about_sidebar_link')
+    }
+    get resetState(){
+        return $('#reset_sidebar_link')
+    }
+    get closeButton(){
+        return $('#react-burger-cross-btn')
+    }
+}
+
+export default new HamburgerMenu();
