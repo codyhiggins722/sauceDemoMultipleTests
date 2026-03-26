@@ -1,4 +1,3 @@
-import { $ } from '@wdio/globals'
 import { $$ } from '@wdio/globals'
 import Site from './site.main'
 
