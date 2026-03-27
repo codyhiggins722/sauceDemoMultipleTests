@@ -3,7 +3,7 @@ import HomePage from '../pageobjects/homepage.js'
 import ItemDetail from '../pageobjects/item.detail.js'
 import HamburgerMenu from '../pageobjects/sidebar.js'
 
-describe('SauceLabs Cart Page Hamburger Menu', () => {
+describe('SauceLabs Item Detail Hamburger Menu', () => {
     it('should log in successfully and show the Products page', async () => {
         await SauceLog.open()
         await SauceLog.login('standard_user', 'secret_sauce')
