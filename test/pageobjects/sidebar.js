@@ -1,7 +1,9 @@
-import { browser, expect } from '@wdio/globals'
+import { expect } from '@wdio/globals'
 import Site from '../pageobjects/site.main'
 import HomePage from '../pageobjects/homepage'
-//hamburger menu items
+import CartPage from './cart'
+import itemDetail from './item.detail'
+
 class HamburgerMenu extends Site{
 //-------selectors-----------
     get hamburgerBtn(){
@@ -25,7 +27,20 @@ class HamburgerMenu extends Site{
     async menuNavigation(){
     await this.hamburgerBtn.click();
     await this.allItems.waitForClickable({ timeout: 3000 });
+    const originalUrl = await browser.getUrl();
     await this.allItems.click();
+        if ((await this.currentURL !== originalUrl) && originalUrl.includes('cart.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.cartButton.click();
+            await expect (CartPage.continueShopping).toBeExisting();
+            await this.hamburgerBtn.click();
+        }
+        else if ((await this.currentURL !== originalUrl) && originalUrl.includes('inventory-item.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.clickRandomItemImg();
+            await expect (itemDetail.backToProducts).toBeExisting();
+            await this.hamburgerBtn.click();
+        }
     await this.resetState.click();
     await expect (HomePage.itemInCart).not.toBeExisting();
     const aboutUrl = await this.about.getAttribute('href');

@@ -1,2 +1,8 @@
+import Site from "./site.main";
 
-//page for items within an item detail
+class ItemDetail extends Site {
+    get backToProducts(){
+        return $('#back-to-products')
+    }
+}
+export default new ItemDetail();
