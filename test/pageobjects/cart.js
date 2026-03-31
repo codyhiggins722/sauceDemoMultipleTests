@@ -13,8 +13,17 @@ class CartPage extends Site {
     }
     get cancelBtn() {
         return $('#cancel')
+    } 
+    async getRemoveButtonCount(){
+        const removeButtons = await $$('//button[contains(text(), "Remove")]')
+        return removeButtons.length;
     }
-    async cartNavigation() {
+    async removeButtonCompare(){
+        const newRemoveButtonCount = await $$('//button[contains(text(), "Remove")]')
+        const ogRemoveButtonCount = await this.getRemoveButtonCount();
+        await expect(newRemoveButtonCount.length).toEqual(ogRemoveButtonCount);
+    }
+    async cartNavigation(){
         await HomePage.cartButton.click();
         await expect(this.checkOutBtn).toBeExisting();
         await this.checkOutBtn.click();
@@ -39,6 +48,13 @@ class CartPage extends Site {
         await expect (HomePage.itemInCart).not.toBeExisting();
         await this.continueShopping.click();
         await expect (HomePage.landingPage).toBeExisting();
+    }
+    async cartpagePersistence() {
+        await HomePage.cartButton.click();
+        await expect (this.checkOutBtn).toBeExisting();
+        await this.getRemoveButtonCount();
+        await browser.refresh();
+        await this.removeButtonCompare();
     }
 }
 export default new CartPage();

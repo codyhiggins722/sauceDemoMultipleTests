@@ -47,6 +47,11 @@ class HamburgerMenu extends Site{
     await expect(aboutUrl).toContain('saucelabs.com');
     await this.closeButton.click();
     }
+    async returntoInventory(){
+        await this.hamburgerBtn.click();
+        await this.allItems.click();
+        await expect(HomePage.landingPage).toBeExisting();
+    }
 }
 
 export default new HamburgerMenu();

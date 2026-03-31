@@ -50,7 +50,11 @@ export const config = {
     // https://saucelabs.com/platform/platform-configurator
     //
     capabilities: [{
-        browserName: 'chrome'
+        browserName: 'chrome',
+        browserVersion: 'stable',
+        'goog:chrome:Options': {
+            args: ['--dable-gpu']
+        }
     }],
 
     //

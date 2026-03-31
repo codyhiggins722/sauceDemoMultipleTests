@@ -18,6 +18,18 @@ class HomePage extends Site{
     get itemImage(){
         return $$('div[class="inventory_item_img"]')
     }
+    get allItemsAdded(){
+        return $('//span[contains(text(),"6")]')
+    }
+    async cartBadgeNumber(){
+        const badge = await $('.shopping_cart_badge');
+        return await badge.getText();
+    }
+    async badgeCompare(){
+        const cartRefreshBadge = await $('.shopping_cart_badge').getText();
+        const ogBadgeNumber = await this.cartBadgeNumber();
+        await expect(cartRefreshBadge).toEqual(ogBadgeNumber);
+    }
     async clickRandomAtC(){
         const buttons = await this.addToCart;
         const randomAtCIndex = Math.floor(Math.random() * buttons.length);
@@ -27,6 +39,18 @@ class HomePage extends Site{
         const pictures = await this.itemImage;
         const randomIndexItemImg = Math.floor(Math.random() * pictures.length);
         await pictures[randomIndexItemImg].click();
+    }
+    async addALLitems(){
+        const atcButtons = await this.addToCart;
+        for (const atcButton of atcButtons){
+            await atcButton.click();
+        }
+    }
+    async homePagePersistence(){
+        await expect (this.itemInCart).toBeExisting();
+        await this.cartBadgeNumber();
+        await browser.refresh();
+        await this.badgeCompare();
     }
 }
 
