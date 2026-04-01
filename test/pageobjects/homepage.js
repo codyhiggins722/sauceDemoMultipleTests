@@ -21,6 +21,9 @@ class HomePage extends Site{
     get allItemsAdded(){
         return $('//span[contains(text(),"6")]')
     }
+    get homePageRemoveBtn(){
+        return $$('//button[contains(text(),"Remove")]')
+    }
     async cartBadgeNumber(){
         const badge = await $('.shopping_cart_badge');
         return await badge.getText();
@@ -51,6 +54,12 @@ class HomePage extends Site{
         await this.cartBadgeNumber();
         await browser.refresh();
         await this.badgeCompare();
+    }
+    async removeALLHomeitems(){
+        const removeButtons = await this.homePageRemoveBtn;
+        for (const removeButton of removeButtons){
+            await removeButton.click();
+        }
     }
 }
 

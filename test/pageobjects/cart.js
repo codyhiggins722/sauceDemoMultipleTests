@@ -11,6 +11,9 @@ class CartPage extends Site {
     get checkoutRemove() {
         return $('//button[contains(text(), "Remove")]')
     }
+    get checkoutRemoveMulti(){
+        return $$('//button[contains(text(), "Remove")]')
+    }
     get cancelBtn() {
         return $('#cancel')
     } 
@@ -55,6 +58,12 @@ class CartPage extends Site {
         await this.getRemoveButtonCount();
         await browser.refresh();
         await this.removeButtonCompare();
+    }
+    async removeALLCheckoutitems(){
+        const removeCheckoutButtons = await this.checkoutRemoveMulti;
+        for (const removeCheckoutButton of removeCheckoutButtons){
+            await removeCheckoutButton.click();
+        }
     }
 }
 export default new CartPage();
