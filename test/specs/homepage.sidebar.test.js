@@ -13,7 +13,7 @@ describe('SauceLabs Main Page Hamburger Menu', () => {
         await expect(HomePage.itemInCart).toBeExisting();
     });
     it('all items does nothing, reset state removes item from cart, correct URL is associated to About, and that "X" closes menu', async () => {    
-    await HamburgerMenu.menuNavigationAboutTest();
+    await HamburgerMenu.menuNavigationAboutTestRELOAD();
     });
     it('should log out and return to sign in page', async () => {   
     await SauceLog.logout();

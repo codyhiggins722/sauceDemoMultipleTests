@@ -3,6 +3,7 @@ import Site from '../pageobjects/site.main'
 import HomePage from '../pageobjects/homepage'
 import CartPage from './cart'
 import itemDetail from './item.detail'
+import SauceLog from './site.access'
 
 class HamburgerMenu extends Site{
     get hamburgerBtn(){
@@ -77,6 +78,38 @@ class HamburgerMenu extends Site{
     }
     await browser.url('https://www.saucedemo.com/inventory.html');
     await browser.setTimeout({ 'pageload': 30000});
+    const productTitle = await $('//span[contains(text(), "Products")]');
+    await productTitle.waitForDisplayed({ timeout: 10000 });
+    await this.hamburgerBtn.click();
+    await this.closeButton.click();
+    }
+    async menuNavigationAboutTestRELOAD(){
+    await this.hamburgerBtn.click();
+    await this.allItems.waitForClickable({ timeout: 3000 });
+    const originalUrl = await browser.getUrl();
+    await this.allItems.click();
+        if ((await this.currentURL !== originalUrl) && originalUrl.includes('cart.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.cartButton.click();
+            await expect (CartPage.continueShopping).toBeExisting();
+            await this.hamburgerBtn.click();
+        }
+        else if ((await this.currentURL !== originalUrl) && originalUrl.includes('inventory-item.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.clickRandomItemImg();
+            await expect (itemDetail.backToProducts).toBeExisting();
+            await this.hamburgerBtn.click();
+        }
+    await this.resetState.click();
+    await expect (HomePage.itemInCart).not.toBeExisting();
+    await browser.setTimeout({ 'pageload' : 5000});
+    try {
+        await this.about.click();
+    } catch (err) {
+    }
+    await browser.reloadSession();
+    await SauceLog.open();
+    await SauceLog.login('standard_user', 'secret_sauce');
     const productTitle = await $('//span[contains(text(), "Products")]');
     await productTitle.waitForDisplayed({ timeout: 10000 });
     await this.hamburgerBtn.click();
