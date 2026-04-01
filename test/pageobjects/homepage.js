@@ -1,7 +1,6 @@
 import { $$ } from '@wdio/globals'
 import Site from './site.main'
 
-// items relating to the main landing page
 class HomePage extends Site{
     get landingPage(){
         return $('//span[contains(text(),"Products")]')

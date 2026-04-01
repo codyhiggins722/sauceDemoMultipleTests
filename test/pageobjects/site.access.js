@@ -2,7 +2,6 @@ import { $ } from '@wdio/globals'
 import Site from './site.main.js'
 import HamburgerMenu from './sidebar.js'
 
-//page for site access, log in and log out
 class SauceLog extends Site {
     get inputUsername () {
         return $('#user-name');
