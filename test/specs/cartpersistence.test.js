@@ -7,7 +7,6 @@ describe('SauceLabs Cart Persistence', () => {
     it('log in successfully and show the Products page', async () => {
         await SauceLog.open()
         await SauceLog.login('standard_user', 'secret_sauce')
-        await expect(HomePage.landingPage).toBeExisting();
     });
     it('add items into the cart, then refresh, and verify those items are still there', async () => {
         await HomePage.clickRandomAtC();

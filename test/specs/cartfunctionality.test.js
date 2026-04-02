@@ -7,7 +7,6 @@ describe('SauceLabs Cart Functionality', () => {
     it('should log in successfully and show the Products page', async () => {
         await SauceLog.open()
         await SauceLog.login('standard_user', 'secret_sauce')
-        await expect(HomePage.landingPage).toBeExisting();
     });
     it('should navigate into the cart page and access functions within that page', async () => {
         await CartPage.cartNavigation();

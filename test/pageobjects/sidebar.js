@@ -52,7 +52,7 @@ class HamburgerMenu extends Site{
         await this.allItems.click();
         await expect(HomePage.landingPage).toBeExisting();
     }
-    async menuNavigationAboutTest(){
+    async menuNavigationAbout(){
     await this.hamburgerBtn.click();
     await this.allItems.waitForClickable({ timeout: 3000 });
     const originalUrl = await browser.getUrl();
@@ -83,10 +83,10 @@ class HamburgerMenu extends Site{
     await this.hamburgerBtn.click();
     await this.closeButton.click();
     }
-    async menuNavigationAboutTestRELOAD(){
+    async menuNavigationAboutReload(){
     await this.hamburgerBtn.click();
     await this.allItems.waitForClickable({ timeout: 3000 });
-    const originalUrl = await browser.getUrl();
+    let originalUrl = await browser.getUrl();
     await this.allItems.click();
         if ((await this.currentURL !== originalUrl) && originalUrl.includes('cart.html')) {
             await expect (HomePage.landingPage).toBeExisting();
@@ -102,6 +102,7 @@ class HamburgerMenu extends Site{
         }
     await this.resetState.click();
     await expect (HomePage.itemInCart).not.toBeExisting();
+    originalUrl = await browser.getUrl();
     await browser.setTimeout({ 'pageload' : 5000});
     try {
         await this.about.click();
@@ -112,6 +113,16 @@ class HamburgerMenu extends Site{
     await SauceLog.login('standard_user', 'secret_sauce');
     const productTitle = await $('//span[contains(text(), "Products")]');
     await productTitle.waitForDisplayed({ timeout: 10000 });
+        if ((await this.currentURL !== originalUrl) && originalUrl.includes('cart.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.cartButton.click();
+            await expect (CartPage.continueShopping).toBeExisting();
+        }
+        else if ((await this.currentURL !== originalUrl) && originalUrl.includes('inventory-item.html')) {
+            await expect (HomePage.landingPage).toBeExisting();
+            await HomePage.clickRandomItemImg();
+            await expect (itemDetail.backToProducts).toBeExisting();
+        }    
     await this.hamburgerBtn.click();
     await this.closeButton.click();
     }
