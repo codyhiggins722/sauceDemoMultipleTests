@@ -107,6 +107,7 @@ class HamburgerMenu extends Site{
     try {
         await this.about.click();
     } catch (err) {
+        console.log('made it to about page, error due to timeout')
     }
     await browser.reloadSession();
     await SauceLog.open();
